@@ -49,7 +49,11 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     }
 
     const { accessToken, refreshToken } = generateTokens(user);
-    res.json({ accessToken, refreshToken });
+    res.json({
+      userId: user.id,
+      accessToken,
+      refreshToken,
+    });
   } catch (err) {
     next(err);
   }
@@ -65,6 +69,7 @@ export const refreshToken = async (req: Request, res: Response, next: NextFuncti
       const savedRefreshToken = await findRefreshToken(refreshToken);
   
       if (!savedRefreshToken || savedRefreshToken.revoked === true || Date.now() >= savedRefreshToken.expireAt.getTime()) {
+        console.log(savedRefreshToken)
         return res.status(401).json({ message: 'Unauthorized' });
       }
   
@@ -89,6 +94,21 @@ export const revokeRefreshTokens = async (req: Request, res: Response, next: Nex
 
     await revokeTokens(userId);
     res.json({ message: `Tokens revoked for user with id #${userId}` });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { userId } = req.body;
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required.' });
+    }
+
+    await revokeTokens(userId);
+
+    res.json({ message: `Successfully logged out user with id #${userId}` });
   } catch (err) {
     next(err);
   }

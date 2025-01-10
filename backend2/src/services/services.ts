@@ -71,3 +71,15 @@ export const findUserByUsername = async (username: string) => {
       },
     });
   };
+
+  export const getPostsByUserId = async (userId: number) => {
+    return await prisma.post.findMany({
+      where: { authorId: userId },
+    });
+  };
+
+  export const deletePost = async (id: string) => {
+    return await prisma.post.delete({
+      where: { id: parseInt(id) },
+    });
+  };

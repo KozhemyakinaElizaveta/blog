@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createPost, getAllPosts, getPostById } from '../services/services';
+import { createPost, deletePost, getAllPosts, getPostById, getPostsByUserId } from '../services/services';
 
 export const createPostController = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -36,6 +36,30 @@ export const getPostByIdController = async (req: Request, res: Response, next: N
 
     res.json(post);
   } catch (err) {
+    next(err);
+  }
+};
+
+export const getPostsByUserIdController = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { userId } = req.params;
+    const posts = await getPostsByUserId(parseInt(userId, 10));
+    res.json(posts);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deletePostController = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ message: 'Post ID is required.' });
+    }
+    await deletePost(id);
+    res.json({ message: 'Post deleted successfully' });
+  } catch (err) {
+    console.error('Error in deletePostController:', err);
     next(err);
   }
 };

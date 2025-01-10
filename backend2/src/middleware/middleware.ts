@@ -11,7 +11,7 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
 
   try {
     const token = authorization.split(' ')[1];
-    const payload = jwt.verify(token, process.env.JWT_ACCESS_SECRET || 'your-secret-key') as JwtPayload;
+    const payload = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '57745DECFC0FD57F7345FBDF199DF779D1ACFE1E81D6F53776B8C7F98F394180') as JwtPayload;
 
     req.user = payload; 
     next();
