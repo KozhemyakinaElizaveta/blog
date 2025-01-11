@@ -1,50 +1,202 @@
-# React + TypeScript + Vite
+## Blog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Описание проекта
 
-Currently, two official plugins are available:
+**Blog** — это современное приложение для ведения личного блога.
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Технологии
 
-## Expanding the ESLint configuration
+Проект построен с использованием следующих технологий:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React** — основа для создания интерфейса
+- **Vite** — инструмент для сборки проекта, обеспечивающий быструю разработку
+- **TypeScript** — строго типизированный язык, повышающий надежность кода
+- **Yarn** — пакетный менеджер
+- **Chakra UI** — библиотека компонентов для создания UI
+- **FSD (Feature-Sliced Design)** — архитектурный подход для организации кода
 
-- Configure the top-level `parserOptions` property like this:
+---
+
+### Установка и запуск
+
+#### Системные требования
+
+- **Node.js** версии 14.x или выше
+- **Yarn** версии 1.x или 2.x
+
+#### Шаги для установки:
+
+1. Склонируйте репозиторий:
+   ```bash
+   git clone https://github.com/KozhemyakinaElizaveta/blog.git
+   cd frontend
+   ```
+
+2. Установите зависимости с помощью Yarn:
+   ```bash
+   yarn install
+   ```
+
+3. Запуск приложения в режиме разработки:
+   ```bash
+   yarn dev
+   ```
+
+   После этого приложение будет доступно по адресу: [http://localhost:5173](http://localhost:5173)
+
+4. Сборка проекта для продакшена:
+   ```bash
+   yarn build
+   ```
+
+5. Для запуска собранного приложения используйте команду:
+   ```bash
+   yarn preview
+   ```
+
+---
+
+### Конфигурация Vite
+
+Ваш проект использует **Vite** для сборки с конфигурацией, настроенной на использование React, TypeScript и поддержки путей через `tsconfig`:
 
 ```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import eslint from 'vite-plugin-eslint'
+import tsconfigPaths from 'vite-tsconfig-paths'
+
+export default defineConfig({
+  plugins: [react(), tsconfigPaths()],
+  base: '/blog/',
+  server: {
+    port: 5173,
+    open: true,
+    proxy: {
+      '/api': {
+        //dev
+        target: 'https://blog-z5et.onrender.com', 
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      app: '/src/app',
+      pages: '/src/pages',
+      widgets: '/src/widgets',
+      entities: '/src/entities',
+      shared: '/src/shared',
     },
   },
 })
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
+
+### Архитектура проекта (FSD)
+
+В приложении используется архитектурный подход **Feature-Sliced Design** (FSD), который позволяет легко масштабировать и поддерживать проект. Структура проекта разделена на модули с четким разграничением по слоям:
+
+1. **app** — Инициализация приложения и глобальные конфигурации (например, Redux и роутинг).
+2. **pages** — Страницы, которые объединяют несколько виджетов и функциональных модулей.
+3. **widgets** — Независимые UI-компоненты, которые могут объединять несколько фич или сущностей.
+4. **entities** — Модели и сущности, используемые в приложении (например, задачи, пользователи).
+5. **shared** — Переиспользуемые элементы, такие как утилиты, типы, константы и базовые UI-компоненты.
+
+Пример структуры файлов:
+
+```bash
+src/
+├── app/             # Инициализация приложения
+├── pages/           # Страницы
+├── widgets/         # Виджеты (комплексные компоненты)
+├── entities/        # Сущности (базовые модели и их логика)
+├── shared/          # Общие модули и компоненты
+```
+---
+
+### Настройка линтинга
+
+В проекте используется ESLint для проверки кода на соответствие стандартам качества. Ниже приведена конфигурация ESLint:
 
 ```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+export default tseslint.config(
+  { ignores: ['dist'] },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
+  }
+)
 ```
+
+Эта конфигурация:
+- Поддерживает правила для TypeScript и React.
+- Использует плагины для управления хуками и Fast Refresh.
+- Игнорирует папку `dist`.
+
+### Команды для линтинга
+
+В нашем проекте определены следующие команды для линтинга:
+
+- **ESLint** — проверка кода на ошибки и несоответствие стандартам.
+- **Prettier** — форматирование кода.
+- **TypeScript** — проверка типов.
+
+
+### Скрипты в `package.json`
+
+Ваш `package.json` также включает скрипты для сборки и разработки:
+
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "yarn lint:type && yarn lint:eslint && yarn lint:prettier",
+    "preview": "vite preview"
+  }
+}
+```
+
+1. **`dev`** — запуск приложения в режиме разработки.
+2. **`build`** — сборка проекта для продакшена. Включает компиляцию TypeScript и сборку с Vite.
+3. **`lint`** — последовательный запуск всех линтинговых проверок: для TypeScript, ESLint и Prettier.
+4. **`preview`** — запуск предварительного просмотра собранного приложения.
+
+### Инструкции по запуску линтинга
+
+- Чтобы запустить проверку кода перед сборкой или в ходе разработки, используйте команду:
+  ```bash
+  yarn lint
+  ```
+
+- Для форматирования кода (если есть ошибки форматирования), используйте:
+  ```bash
+  yarn format
+  ```
+
+---
