@@ -2,8 +2,7 @@
 
 ### Описание проекта
 
-**Blog** — это современное приложение для ведения личного блога.
----
+## **Blog** — это современное приложение для ведения личного блога.
 
 ### Технологии
 
@@ -28,17 +27,20 @@
 #### Шаги для установки:
 
 1. Склонируйте репозиторий:
+
    ```bash
    git clone https://github.com/KozhemyakinaElizaveta/blog.git
    cd frontend
    ```
 
 2. Установите зависимости с помощью Yarn:
+
    ```bash
    yarn install
    ```
 
 3. Запуск приложения в режиме разработки:
+
    ```bash
    yarn dev
    ```
@@ -46,6 +48,7 @@
    После этого приложение будет доступно по адресу: [http://localhost:5173](http://localhost:5173)
 
 4. Сборка проекта для продакшена:
+
    ```bash
    yarn build
    ```
@@ -76,7 +79,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         //dev
-        target: 'https://blog-z5et.onrender.com', 
+        target: 'https://blog-z5et.onrender.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
@@ -116,6 +119,7 @@ src/
 ├── entities/        # Сущности (базовые модели и их логика)
 ├── shared/          # Общие модули и компоненты
 ```
+
 ---
 
 ### Настройка линтинга
@@ -154,6 +158,7 @@ export default tseslint.config(
 ```
 
 Эта конфигурация:
+
 - Поддерживает правила для TypeScript и React.
 - Использует плагины для управления хуками и Fast Refresh.
 - Игнорирует папку `dist`.
@@ -165,7 +170,6 @@ export default tseslint.config(
 - **ESLint** — проверка кода на ошибки и несоответствие стандартам.
 - **Prettier** — форматирование кода.
 - **TypeScript** — проверка типов.
-
 
 ### Скрипты в `package.json`
 
@@ -190,6 +194,7 @@ export default tseslint.config(
 ### Инструкции по запуску линтинга
 
 - Чтобы запустить проверку кода перед сборкой или в ходе разработки, используйте команду:
+
   ```bash
   yarn lint
   ```

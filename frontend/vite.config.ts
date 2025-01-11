@@ -12,7 +12,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         //dev
-        target: 'https://blog-z5et.onrender.com', 
+        target: 'https://blog-z5et.onrender.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

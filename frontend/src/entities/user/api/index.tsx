@@ -1,6 +1,6 @@
 import axios from 'shared/api/axios'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export function login(username: string, password: string) {
   return axios.post(
@@ -25,7 +25,11 @@ export const registerUser = async (userData: {
 }
 
 export function logout(userId: number) {
-    return axios.post(`${API_BASE_URL}/api/auth/logout`, { userId }, {
+  return axios.post(
+    `${API_BASE_URL}/api/auth/logout`,
+    { userId },
+    {
       withCredentials: true,
-    })
-  }
+    }
+  )
+}

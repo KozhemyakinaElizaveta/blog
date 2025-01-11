@@ -4,24 +4,20 @@ import { useNavigate } from 'react-router-dom'
 import { deletePost } from 'entities/post/api'
 
 interface CardProps {
-    title: string
+  title: string
   date: string
   id: number
 }
 
-export const Card = ({
-  title,
-  date,
-  id
-}: CardProps) => {
-    const navigate = useNavigate();
-    const token = localStorage.getItem('refresh');
-    
-    const handleDeleteClick = () => {
-        if (token === null) return;
-        deletePost(id, token);
-        navigate(0)
-    };
+export const Card = ({ title, date, id }: CardProps) => {
+  const navigate = useNavigate()
+  const token = localStorage.getItem('refresh')
+
+  const handleDeleteClick = () => {
+    if (token === null) return
+    deletePost(id, token)
+    navigate(0)
+  }
 
   return (
     <Flex
@@ -39,18 +35,18 @@ export const Card = ({
       </Text>
       <Flex alignItems={'center'} justifyContent={'space-between'}>
         <Text fontSize={'12px'} fontWeight={400}>
-            {date}
+          {date}
         </Text>
         <Text
-            fontSize={'12px'}
-            cursor={'pointer'}
-            color={'red.400'}
-            _hover={{ color: 'red.500' }}
-            onClick={handleDeleteClick}
+          fontSize={'12px'}
+          cursor={'pointer'}
+          color={'red.400'}
+          _hover={{ color: 'red.500' }}
+          onClick={handleDeleteClick}
         >
-            Удалить
+          Удалить
         </Text>
-        </Flex>
+      </Flex>
     </Flex>
   )
 }

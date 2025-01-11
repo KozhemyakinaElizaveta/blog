@@ -27,7 +27,7 @@ export default function Routing() {
           <Flex ml="30px" align={'center'} gap={'5px'}>
             <LoginLogo />
             <Text fontSize={'36px'} fontWeight={700}>
-            Blog
+              Blog
             </Text>
           </Flex>
         </Flex>

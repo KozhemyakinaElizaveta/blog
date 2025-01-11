@@ -21,10 +21,10 @@ export const LoginForm = () => {
         gap={'16px'}
       >
         <Flex align={'center'} gap={'5px'}>
-        <LoginLogo />
-        <Text fontSize={'36px'} fontWeight={700}>
+          <LoginLogo />
+          <Text fontSize={'36px'} fontWeight={700}>
             Blog
-        </Text>
+          </Text>
         </Flex>
         <Flex
           flexDirection={'column'}
@@ -76,7 +76,7 @@ export const LoginForm = () => {
             fontSize={'14px'}
             color={'black.100'}
             cursor={'pointer'}
-            _hover={{color: 'blue.300'}}
+            _hover={{ color: 'blue.300' }}
             onClick={() => navigate(PageRoutes.Registration)}
           >
             Регистрация

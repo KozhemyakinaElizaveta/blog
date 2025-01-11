@@ -13,19 +13,19 @@ function BoardMenu() {
   const toast = useToast()
   const blue300 = theme.colors.blue['300']
 
-  const userIdString = localStorage.getItem('id');
-  const userId = userIdString ? parseInt(userIdString, 10) : null;
+  const userIdString = localStorage.getItem('id')
+  const userId = userIdString ? parseInt(userIdString, 10) : null
 
-  if (isLogin) return null;
+  if (isLogin) return null
 
   const handleLogout = async () => {
     if (userId !== null) {
       try {
-        await logout(userId);
-        localStorage.removeItem('refresh');
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('id');
-        navigate(PageRoutes.Login);
+        await logout(userId)
+        localStorage.removeItem('refresh')
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('id')
+        navigate(PageRoutes.Login)
       } catch {
         toast({
           position: 'bottom-right',
@@ -35,7 +35,7 @@ function BoardMenu() {
           duration: 9000,
           isClosable: true,
           variant: 'top-accent',
-        });
+        })
       }
     } else {
       toast({
@@ -46,9 +46,9 @@ function BoardMenu() {
         duration: 9000,
         isClosable: true,
         variant: 'top-accent',
-      });
+      })
     }
-  };
+  }
 
   return (
     <Flex
