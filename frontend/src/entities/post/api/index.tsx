@@ -1,8 +1,10 @@
 import axios from 'shared/api/axios'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export function createPost( message: string, date: string, authorId: number, accessToken: string ) {
   return axios.post(
-    '/api/posts/create',
+    `${API_BASE_URL}/api/posts/create`,
     { message, date, authorId }, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -12,7 +14,7 @@ export function createPost( message: string, date: string, authorId: number, acc
 }
 
 export async function getPostsByUserId(userId: number, accessToken: string) {
-  return axios.get(`/api/posts/user/${userId}`, {
+  return axios.get(`${API_BASE_URL}/api/posts/user/${userId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -21,7 +23,7 @@ export async function getPostsByUserId(userId: number, accessToken: string) {
 }
 
 export async function deletePost(userId: number, accessToken: string) {
-  return axios.delete(`/api/posts/${userId}`, {
+  return axios.delete(`${API_BASE_URL}/api/posts/${userId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

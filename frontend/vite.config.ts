@@ -5,13 +5,14 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  base: '/blog/',
   server: {
     port: 5173,
-    open: 'http://localhost:5173/',
+    open: true,
     proxy: {
       '/api': {
         //dev
-        target: 'http://localhost:3000', 
+        target: 'https://blog-z5et.onrender.com', 
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

@@ -1,6 +1,7 @@
 import { useToast } from '@chakra-ui/react'
 import { login } from 'entities/user/api'
 import { useFormik, FormikProps } from 'formik'
+import { PageRoutes } from 'pages/PageRoutes'
 import { useNavigate } from 'react-router-dom'
 
 export interface FormValues {
@@ -48,7 +49,7 @@ export const useLoginForm = (): FormikProps<FormValues> => {
         localStorage.setItem('refresh', data.refreshToken)
         localStorage.setItem('id', data.userId)
         if (data) {
-          navigate('/home')
+          navigate(PageRoutes.Home)
         }
       })
       .catch(() => {

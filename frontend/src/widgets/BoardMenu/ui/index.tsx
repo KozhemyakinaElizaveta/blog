@@ -1,13 +1,14 @@
 import { Box, Flex, useTheme, useToast } from '@chakra-ui/react'
 import { logout } from 'entities/user/api'
+import { PageRoutes } from 'pages/PageRoutes'
 import { useMatch, useNavigate } from 'react-router-dom'
 import { Logout, Tasks } from 'shared/iconpack'
 import { ButtonsNavigations } from 'shared/ui'
 
 function BoardMenu() {
   const navigate = useNavigate()
-  const isLogin = useMatch('/')
-  const isHome = useMatch('/home')
+  const isLogin = useMatch(PageRoutes.Login)
+  const isHome = useMatch(PageRoutes.Home)
   const theme = useTheme()
   const toast = useToast()
   const blue300 = theme.colors.blue['300']
@@ -24,7 +25,7 @@ function BoardMenu() {
         localStorage.removeItem('refresh');
         localStorage.removeItem('accessToken');
         localStorage.removeItem('id');
-        navigate('/');
+        navigate(PageRoutes.Login);
       } catch {
         toast({
           position: 'bottom-right',
@@ -64,7 +65,7 @@ function BoardMenu() {
             title="Posts"
             Icon={<Tasks />}
             check={!!isHome}
-            onClick={() => navigate('/home')}
+            onClick={() => navigate(PageRoutes.Home)}
           />
         </Box>
       </Flex>

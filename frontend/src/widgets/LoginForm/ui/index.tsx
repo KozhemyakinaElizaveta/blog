@@ -3,6 +3,7 @@ import { Button, Input, PasswordInput, Text } from 'shared/ui'
 import { useLoginForm } from '../lib'
 import { LoginLogo } from 'shared/iconpack'
 import { useNavigate } from 'react-router-dom'
+import { PageRoutes } from 'pages/PageRoutes'
 
 export const LoginForm = () => {
   const formik = useLoginForm()
@@ -76,7 +77,7 @@ export const LoginForm = () => {
             color={'black.100'}
             cursor={'pointer'}
             _hover={{color: 'blue.300'}}
-            onClick={() => navigate('/registration')}
+            onClick={() => navigate(PageRoutes.Registration)}
           >
             Регистрация
           </chakra.span>

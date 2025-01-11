@@ -3,6 +3,7 @@ import { useMatch, useNavigate } from 'react-router-dom';
 import { ContainerApp } from 'shared/ui';
 import Loading from 'pages/loading';
 import { refresh as postRefresh } from 'shared/api/axios';
+import { PageRoutes } from 'pages/PageRoutes';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -18,7 +19,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   useEffect(() => {
     if (!refresh) {
       localStorage.removeItem('refresh');
-      navigate('/');
+      navigate(PageRoutes.Login);
       setIsLoaded(true);
     } else if (!isLoaded && !isRefreshing) {
       setIsRefreshing(true);

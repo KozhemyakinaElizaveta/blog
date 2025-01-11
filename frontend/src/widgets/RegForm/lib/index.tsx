@@ -3,6 +3,7 @@ import { useFormik, FormikProps } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from 'entities/user/api'
+import { PageRoutes } from 'pages/PageRoutes'
 
 export interface RegistrationFormValues {
   username: string
@@ -36,7 +37,7 @@ export const useRegistrationForm = (): FormikProps<RegistrationFormValues> => {
       }
       registerUser(userData)
         .then(() => {
-          navigate('/')
+          navigate(PageRoutes.Login)
           toast({
             title: 'Успех',
             description: 'Регистрация прошла успешно!',

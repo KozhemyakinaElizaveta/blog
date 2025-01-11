@@ -5,6 +5,7 @@ import { Route, Routes, useMatch } from 'react-router-dom'
 import { LoginLogo } from 'shared/iconpack'
 import { DefaultLayout, LoginLayout, Text } from 'shared/ui'
 import { BoardMenu } from 'widgets/BoardMenu/ui'
+import { PageRoutes } from './PageRoutes'
 
 const HomePage = lazy(() => import('./home'))
 const LoginPage = lazy(() => import('./login'))
@@ -23,8 +24,11 @@ export default function Routing() {
           flexDirection="column"
           justifyContent="space-around"
         >
-          <Flex ml="30px">
+          <Flex ml="30px" align={'center'} gap={'5px'}>
             <LoginLogo />
+            <Text fontSize={'36px'} fontWeight={700}>
+            Blog
+            </Text>
           </Flex>
         </Flex>
       )}
@@ -36,7 +40,7 @@ export default function Routing() {
         )}
         <Routes>
           <Route
-            path={'/home'}
+            path={PageRoutes.Home}
             element={
               <ProtectedRoute>
                 <HomePage />
@@ -44,7 +48,7 @@ export default function Routing() {
             }
           />
           <Route
-            path={'/'}
+            path={PageRoutes.Login}
             element={
               <LoginLayout>
                 <LoginPage />
@@ -52,7 +56,7 @@ export default function Routing() {
             }
           />
           <Route
-            path={'/registration'}
+            path={PageRoutes.Registration}
             element={
               <LoginLayout>
                 <RegistrationPage />
@@ -60,7 +64,7 @@ export default function Routing() {
             }
           />
           <Route
-            path={'*'}
+            path={PageRoutes.Page404}
             element={
               <Flex
                 w="100%"
